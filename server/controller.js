@@ -9,7 +9,7 @@
 
 // general - enter in database then decide whether to create or update?
 
-const mongoose = require('./mongoose');
+const mongoose = require('mongoose');
 
 const Artist = require('./schemas/Artist');
 const Album = require('./schemas/Album');

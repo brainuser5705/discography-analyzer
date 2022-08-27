@@ -102,8 +102,8 @@ function getRequest(accessToken, url){
     
 }
 
-// get all data with pagination
-async function getData(accessToken, endpoint, ...queryParams){ // using rest operator for the query parameters
+// get all `item` property data with pagination
+async function getItemData(accessToken, endpoint, ...queryParams){ // using rest operator for the query parameters
 
     // if nextPath isn't provided, then specify the API endpoint
     let finalUrl = `${SPOTIFY_API_URL}/${endpoint}`;
@@ -136,4 +136,25 @@ async function getData(accessToken, endpoint, ...queryParams){ // using rest ope
 
 }
 
-module.exports = { getAccessToken, getData }
+// get all properties from data
+async function getFullData(accessToken, endpoint, ...queryParams){ // using rest operator for the query parameters
+
+    // if nextPath isn't provided, then specify the API endpoint
+    let finalUrl = `${SPOTIFY_API_URL}/${endpoint}`;
+    
+    // add the query parameters to the path, if there are ones
+    if (Array.isArray(queryParams)){
+        finalUrl += `?${queryParams.join('&')}`;
+    }
+
+    try{
+
+        return await getRequest(accessToken, finalUrl);
+
+    }catch(error){
+        console.error(`Error occured: ${error.message}`);
+    }
+
+}
+
+module.exports = { getAccessToken, getFullData, getItemData }
