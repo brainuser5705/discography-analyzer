@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 // tracks are subdocuments to albums
 const trackSchema = new Schema({
+    _id: String,
     name: String,
     acoustiness: Number,
     danceability: Number,

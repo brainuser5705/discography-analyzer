@@ -119,7 +119,7 @@ async function getData(accessToken, endpoint, ...queryParams){ // using rest ope
 
         // get the first page
         let data = await getRequest(accessToken, finalUrl);
-        fullData.push(...data.items); // spread operator to push each individual element
+        fullData.push(...data.items); // spread operator to push each individual object
         
         // for further pages, request with provided next url
         // if the next property didn't exist, it would be undefined
@@ -131,7 +131,7 @@ async function getData(accessToken, endpoint, ...queryParams){ // using rest ope
         return fullData;
 
     }catch(error){
-        console.error(`GET request to ${finalUrl} failed: ${error.message}`);
+        console.error(`Error occured: ${error.message}`);
     }
 
 }
