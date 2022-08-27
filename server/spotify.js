@@ -1,10 +1,12 @@
+// low level spotify requests
+
 require("dotenv").config({ path: "./config.env" });
 const https = require('https');
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
-const SPOTIFY_API_URL = 'https://api.spotify.com/v1/';
+const SPOTIFY_API_URL = 'https://api.spotify.com/v1';
 
 function getAccessToken(){
 
@@ -93,7 +95,7 @@ function getRequest(accessToken, url){
             });
     
         }).on('error', (error) => {
-            console.error(error.message);
+            // this might not even run
             reject(`GET request to ${endpoint} failed: ${error.message}`);
         });
     });
@@ -101,24 +103,35 @@ function getRequest(accessToken, url){
 }
 
 // get all data with pagination
-async function getData(accessToken, endpoint, ...args){
+async function getData(accessToken, endpoint, ...queryParams){ // using rest operator for the query parameters
 
     // if nextPath isn't provided, then specify the API endpoint
-    endpointUrl = SPOTIFY_API_URL + `${endpoint}/${args.join('/')}` // using rest operator for the rest of the path
+    let finalUrl = `${SPOTIFY_API_URL}/${endpoint}`;
+    
+    // add the query parameters to the path, if there are ones
+    if (Array.isArray(queryParams)){
+        finalUrl += `?${queryParams.join('&')}`;
+    }
 
     try{
+
+        let fullData = [];
+
         // get the first page
-        let data = await getRequest(accessToken, endpointUrl);
-        console.log(data);
+        let data = await getRequest(accessToken, finalUrl);
+        fullData.push(...data.items); // spread operator to push each individual element
         
         // for further pages, request with provided next url
+        // if the next property didn't exist, it would be undefined
         while(data.next){
             data = await getRequest(accessToken, data.next);
-            console.log(data);
+            fullData.push(...data.items);
         }
 
+        return fullData;
+
     }catch(error){
-        console.error(error.message);
+        console.error(`GET request to ${finalUrl} failed: ${error.message}`);
     }
 
 }
