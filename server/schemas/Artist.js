@@ -5,7 +5,10 @@ const artistSchema = new Schema({
     _id: String,
     name: String,
     pic_url: String,
-    albums: [String] // primitive array, array of SchemaTypes
+    albums: [{
+        type: String,
+        ref: 'Album'
+    }] // primitive array, array of SchemaTypes
 });
 
 module.exports = mongoose.model("Artist", artistSchema);

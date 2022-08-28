@@ -5,17 +5,20 @@ const Schema = mongoose.Schema;
 const trackSchema = new Schema({
     _id: String,
     name: String,
-    acoustiness: Number,
-    danceability: Number,
-    energy: Number,
-    instrumentalness: Number,
-    liveness: Number,
-    loudness: Number,
-    speechiness: Number,
-    valence: Number
+    features: {
+        acousticness: Number,
+        danceability: Number,
+        energy: Number,
+        instrumentalness: Number,
+        liveness: Number,
+        loudness: Number,
+        speechiness: Number,
+        valence: Number
+    }
 });
 
 const albumSchema = new Schema({
+    _id: String,
     name: String,
     pic_url: String,
     tracks: [trackSchema] // document array

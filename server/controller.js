@@ -9,28 +9,28 @@
 
 // general - enter in database then decide whether to create or update?
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
-const Artist = require('./schemas/Artist');
-const Album = require('./schemas/Album');
+// const Artist = require('./schemas/Artist');
+// const Album = require('./schemas/Album');
 
-async function putAlbum(albumData){
-    // check if album already exists
-    return Album.create(albumData);
-}
+// async function getAlbum(albumId){
+//     return await Album.findById(albumId);
+// }
 
-async function getArtist(artistId){
-    return Artist.findById(artistId);
-}
+// async function putAlbum(albumData){
+//     // check if album already exists
+//     await Album.create(albumData);
+// }
 
-async function putArtist(artistData){
-    
-    // check if I should update the artist?
+// async function getArtist(artistId){
+//     return await Artist.findById(artistId);
+// }
 
-    Artist.create(artistData);
+// async function putArtist(artistData){
+//     if Artist.exists({_id: artistData.id}) artist})
+//     await Artist.create(artistData);
+// }
 
-    // will need to save it?
 
-}
-
-module.exports = { putArtist, getArtist }
+// module.exports = { putArtist, getArtist, putAlbum, getAlbum}
