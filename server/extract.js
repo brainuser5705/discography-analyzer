@@ -73,15 +73,12 @@ async function extractData(){
         return new Promise((resolve, reject) => {
             let albumIds = [];
             spotify.getItemData(accessToken, `artists/${artistId}/albums`, "include_groups=single,album")
-            .then((albumData) => {
+            .then(async (albumData) => {
 
-                albumData.map(async (album) => {
+                await Promise.all(albumData.map(async (album) => {
                     let albumDoc = await Album.exists({"_id": album.id});
                     if (!albumDoc){
-
-                        albumIds.push(album.id);
                         
-                        // trouble
                         let tracks = await getTracks(album.id);
 
                         await Album.create({
@@ -91,10 +88,12 @@ async function extractData(){
                             "tracks": tracks
                         });
 
+                        albumIds.push(album.id);
+
                     }else{
                         console.log(`Album ${album.id} already has document.`);
                     }
-                });
+                }));
 
                 resolve(albumIds);
 
