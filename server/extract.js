@@ -8,6 +8,7 @@ const Album = require('./schemas/Album');
 
 BLACKPINK_ID = '41MozSoPIsD1dJM0CLPjZF';
 VANISHING_GIRL_ID = '0z5Sp5kPFConDlXjb0V9vJ'
+NEW_JEANS_ID = '6HvZYsbFfjnjFrWF950C9d';
 
 async function extractData(){
 
@@ -18,7 +19,7 @@ async function extractData(){
         return new Promise((resolve, reject) => {
             spotify.getFullData(accessToken, `audio-features/${trackId}`)
             .then((features) => {
-                console.log("Got track features");
+                
                 resolve({
                     "acousticness": features.acousticness,
                     "danceability": features.danceability,
@@ -56,7 +57,6 @@ async function extractData(){
                     });
                 }));
                 
-                console.log(tracks);
                 resolve(tracks);
                  
             })
@@ -75,6 +75,7 @@ async function extractData(){
             spotify.getItemData(accessToken, `artists/${artistId}/albums`, "include_groups=single,album")
             .then(async (albumData) => {
 
+                // need Promise.all because of map (array of promises)
                 await Promise.all(albumData.map(async (album) => {
                     let albumDoc = await Album.exists({"_id": album.id});
                     if (!albumDoc){
@@ -121,10 +122,6 @@ async function extractData(){
                         "pic_url": artistData.images[0].url,
                         "albums": albums
                     });
-
-                })
-                .catch((error) => {
-                    console.log(`Error getting artist data: ${error.message}`);
                 })
 
             }else{
@@ -137,9 +134,10 @@ async function extractData(){
         
     }
 
-    await Artist.deleteOne({"_id" : '0z5Sp5kPFConDlXjb0V9vJ'});
-    await Album.deleteOne({"_id" : '0edYR0ydMBFJFt2OHwDrmt'});
+    // await Artist.deleteOne({"_id" : '0z5Sp5kPFConDlXjb0V9vJ'});
+    // await Album.deleteOne({"_id" : '0edYR0ydMBFJFt2OHwDrmt'});
     await getArtist(VANISHING_GIRL_ID);
+    await getArtist(NEW_JEANS_ID);
 
 }
 

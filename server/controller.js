@@ -1,36 +1,31 @@
-// create documents and put into database
-// - artist
-// - album
-// - track
+const Artist = require('./schemas/Artist');
+const Album = require('./schemas/Album');
 
-// add an additional album or track to an artist
-// update specific track features?
+async function getArtist(req, res){
 
+    // destructing assignment
+    const { artistId } = req.params;
 
-// general - enter in database then decide whether to create or update?
+    const artist = await Artist.findById(artistId);
 
-// const mongoose = require('mongoose');
+    if (!artist){
+        return res.status(400).json({error: "No such artist"});
+    }
 
-// const Artist = require('./schemas/Artist');
-// const Album = require('./schemas/Album');
+    return res.status(200).json(artist);
+}
 
-// async function getAlbum(albumId){
-//     return await Album.findById(albumId);
-// }
+async function getAlbum(req, res){
 
-// async function putAlbum(albumData){
-//     // check if album already exists
-//     await Album.create(albumData);
-// }
+    const { albumId } = req.params;
 
-// async function getArtist(artistId){
-//     return await Artist.findById(artistId);
-// }
+    const album = await Album.findById(albumId);
 
-// async function putArtist(artistData){
-//     if Artist.exists({_id: artistData.id}) artist})
-//     await Artist.create(artistData);
-// }
+    if (!album){
+        return res.status(400).json({error: "No such album"});
+    }
+    
+    return res.status(200).json(album);
+}
 
-
-// module.exports = { putArtist, getArtist, putAlbum, getAlbum}
+module.exports = { getArtist, getAlbum }
