@@ -1,0 +1,488 @@
+{
+	"tables": {
+		"abd88937-f0ad-4d02-9078-eadbe6279f61": {
+			"id": "abd88937-f0ad-4d02-9078-eadbe6279f61",
+			"visible": true,
+			"name": "Artist",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "460f502c-8362-4dad-8190-2f33393c11f2",
+					"name": "_id",
+					"datatype": "String",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "ccd5f2bc-ed46-4c34-a235-c020df770924",
+					"name": "name",
+					"datatype": "String",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "8954c9e3-6411-4820-9d60-730dae2d8faf",
+					"name": "pic_url",
+					"datatype": "String",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "9aabc9ae-4368-4cc4-a627-3b2f0b65e484",
+					"name": "albums",
+					"datatype": "String",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"fk": true,
+					"ref": "Album",
+					"list": true
+				}
+			],
+			"relations": [
+				"c7a18012-8ef0-4c89-af0f-eb255aafc0ae"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "cea31425-e786-4c42-9da2-69a85de144e0",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "a9fc838d-4a75-4d9d-91f0-6407334346ba",
+							"colid": "460f502c-8362-4dad-8190-2f33393c11f2"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true
+		},
+		"4157eaa6-2943-4402-9f7b-79ad121c2c14": {
+			"id": "4157eaa6-2943-4402-9f7b-79ad121c2c14",
+			"visible": true,
+			"name": "Album",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "cc6342ec-5816-4e32-a770-129b1cf1ea94",
+					"name": "_id",
+					"datatype": "String",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "576d15dd-666f-4cfb-896e-fbb003265630",
+					"name": "name",
+					"datatype": "String",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "04457ab9-c8df-4799-93ab-9a734859bde6",
+					"name": "pic_url",
+					"datatype": "String",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "aa7633b5-dd80-4362-9521-3dab31c54c78",
+					"name": "tracks",
+					"datatype": "16f21ec7-9f71-4c75-9cd3-623573b8c275",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"ref": "",
+					"options": ""
+				}
+			],
+			"relations": [
+				"c7a18012-8ef0-4c89-af0f-eb255aafc0ae"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "9dd2b801-c4ff-47db-9583-4f340ce525b5",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "66f8e98a-7357-4514-a55f-79f9c3bcd4b1",
+							"colid": "cc6342ec-5816-4e32-a770-129b1cf1ea94"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"others": ""
+		},
+		"76edafa3-9062-47f4-8afe-e16e7117b2e4": {
+			"id": "76edafa3-9062-47f4-8afe-e16e7117b2e4",
+			"visible": true,
+			"name": "Feature",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "7c8f7adf-cf06-4b53-a99c-68195c583581",
+					"name": "acousticness",
+					"datatype": "Number",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "d041f376-319d-4a85-9da7-362fbf8b4cfa",
+					"name": "danceability",
+					"datatype": "Number",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "e75017bb-2ef3-4c31-9053-f3c8de4e653f",
+					"name": "energy",
+					"datatype": "Number",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "6e8165c2-4cb6-497c-b907-21e56e359b2e",
+					"name": "instrumentalness",
+					"datatype": "Number",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "ba3b24f3-82f9-4863-9429-3ec0267b9b56",
+					"name": "liveness",
+					"datatype": "Number",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "30ca490e-f06e-4975-9a54-8036cd4e6723",
+					"name": "loudness",
+					"datatype": "Number",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "a56d78be-c926-4355-8514-082d2072c963",
+					"name": "speechiness",
+					"datatype": "Number",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "3dc0602e-de1a-40b6-8d9f-00e364b6d92e",
+					"name": "valence",
+					"datatype": "Number",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "6efda8f7-5b34-43d5-b688-f21950099f57",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": []
+				}
+			],
+			"indexes": [],
+			"embeddable": true,
+			"generate": true,
+			"generateCustomCode": true,
+			"others": ""
+		},
+		"16f21ec7-9f71-4c75-9cd3-623573b8c275": {
+			"id": "16f21ec7-9f71-4c75-9cd3-623573b8c275",
+			"visible": true,
+			"name": "Track",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "bbdec3e8-9538-4caf-9c38-7aa055f72b50",
+					"name": "name",
+					"datatype": "String",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				},
+				{
+					"id": "518e582d-b2f6-4d9f-b6a7-0fa9fa0b6fe7",
+					"name": "features",
+					"datatype": "76edafa3-9062-47f4-8afe-e16e7117b2e4",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"ref": "",
+					"options": ""
+				}
+			],
+			"relations": [],
+			"lines": [],
+			"keys": [
+				{
+					"id": "5917468d-42ea-4cf5-88b3-6d9820d09062",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": []
+				}
+			],
+			"indexes": [],
+			"embeddable": true,
+			"generate": true,
+			"generateCustomCode": true,
+			"others": ""
+		}
+	},
+	"relations": {
+		"c7a18012-8ef0-4c89-af0f-eb255aafc0ae": {
+			"id": "c7a18012-8ef0-4c89-af0f-eb255aafc0ae",
+			"visible": true,
+			"name": "Album_Artist",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "9dd2b801-c4ff-47db-9583-4f340ce525b5",
+			"parent": "4157eaa6-2943-4402-9f7b-79ad121c2c14",
+			"child": "abd88937-f0ad-4d02-9078-eadbe6279f61",
+			"c_mp": "true",
+			"c_mch": "true",
+			"c_p": "many",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "1dada17e-3606-432e-a836-9e9f738cb300",
+					"parentcol": "cc6342ec-5816-4e32-a770-129b1cf1ea94",
+					"childcol": "9aabc9ae-4368-4cc4-a627-3b2f0b65e484"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		}
+	},
+	"notes": {},
+	"lines": {},
+	"model": {
+		"name": "Kpop-data-viz Schema V1",
+		"id": "01b99f61-f9cb-4b74-a853-c70a9131fae8",
+		"activeDiagram": "50f57cff-578c-42b7-8fe1-04d5c053210d",
+		"desc": "Version 1 for Mongoose schema design",
+		"path": "",
+		"type": "MONGOOSE",
+		"version": 1,
+		"parentTableInFkCols": true,
+		"caseConvention": "under",
+		"replaceSpace": "_",
+		"color": "transparent",
+		"sideSelections": true,
+		"isDirty": true,
+		"storedin": {
+			"major": 4,
+			"minor": 6,
+			"extra": 6
+		},
+		"embeddedInParentsIsDisplayed": true,
+		"schemaContainerIsDisplayed": false,
+		"cardinalityIsDisplayed": false,
+		"estimatedSizeIsDisplayed": false,
+		"writeFileParam": false,
+		"def_coltopk": true,
+		"def_others": "",
+		"lastSaved": "8/27/2022"
+	},
+	"otherObjects": {},
+	"diagrams": {
+		"50f57cff-578c-42b7-8fe1-04d5c053210d": {
+			"name": "Main Diagram",
+			"description": "",
+			"id": "50f57cff-578c-42b7-8fe1-04d5c053210d",
+			"keysgraphics": true,
+			"linegraphics": "detailed",
+			"zoom": 1,
+			"background": "transparent",
+			"lineColor": "transparent",
+			"isOpen": true,
+			"main": true,
+			"diagramItems": {
+				"abd88937-f0ad-4d02-9078-eadbe6279f61": {
+					"referencedItemId": "abd88937-f0ad-4d02-9078-eadbe6279f61",
+					"x": 183,
+					"y": 259,
+					"gHeight": 103,
+					"gWidth": 196,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": true,
+					"autoExpand": true
+				},
+				"4157eaa6-2943-4402-9f7b-79ad121c2c14": {
+					"referencedItemId": "4157eaa6-2943-4402-9f7b-79ad121c2c14",
+					"x": 480,
+					"y": 258,
+					"gHeight": 279,
+					"gWidth": 289,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"76edafa3-9062-47f4-8afe-e16e7117b2e4": {
+					"referencedItemId": "76edafa3-9062-47f4-8afe-e16e7117b2e4",
+					"x": 884,
+					"y": 455,
+					"gHeight": 171,
+					"gWidth": 245,
+					"color": "#ffffff",
+					"background": "#8bc34a",
+					"resized": false,
+					"autoExpand": true
+				},
+				"16f21ec7-9f71-4c75-9cd3-623573b8c275": {
+					"referencedItemId": "16f21ec7-9f71-4c75-9cd3-623573b8c275",
+					"x": 875,
+					"y": 206,
+					"gHeight": 207,
+					"gWidth": 267,
+					"color": "#ffffff",
+					"background": "#8bc34a",
+					"resized": false,
+					"autoExpand": true
+				}
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"type": "erd"
+		}
+	},
+	"order": [],
+	"collapsedTreeItems": []
+}
