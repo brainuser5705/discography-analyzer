@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const artistSchema = new Schema({
     _id: String,
     name: String,
-    pic_url: String,
+    picUrl: String,
     albums: [{
         type: String,
         ref: 'Album'

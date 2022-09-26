@@ -20,7 +20,7 @@ const trackSchema = new Schema({
 const albumSchema = new Schema({
     _id: String,
     name: String,
-    pic_url: String,
+    picUrl: String,
     tracks: [trackSchema] // document array
 });
 

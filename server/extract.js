@@ -85,7 +85,7 @@ async function extractData(){
                         await Album.create({
                             "_id": album.id,
                             "name": album.name,
-                            "pic_url": album.images[0].url,
+                            "picUrl": album.images[0].url,
                             "tracks": tracks
                         });
 
@@ -119,7 +119,7 @@ async function extractData(){
                     await Artist.create({
                         "_id": artistId,
                         "name": artistData.name,
-                        "pic_url": artistData.images[0].url,
+                        "picUrl": artistData.images[0].url,
                         "albums": albums
                     });
                 })
