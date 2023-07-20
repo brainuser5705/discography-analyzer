@@ -29,10 +29,13 @@ function AlbumCard(props: AlbumProps) {
         })
     }, []);
 
-    const trackItems = album.tracks.map((track: Track) => 
+    const trackItems = album.tracks.map((track: Track) => {
+        track.album = album;
+        return <li key={track._id}>
+        {track.name} - {track.features.energy} - {track.album.name}</li>;
+    }
         // note - no brackets because that denotes function that returns void
-        <li key={track._id}>
-            {track.name}</li>
+        
     );
 
     return (
