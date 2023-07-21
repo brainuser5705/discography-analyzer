@@ -3,7 +3,9 @@ import './App.css';
 import Profile from './components/Profile';
 import { Artist } from './types/artist';
 import AlbumCard from './components/AlbumCard';
-import { Album } from './types/album';
+import Graph from './components/Graph';
+
+const AlbumContext = React.createContext<string[]>([]);
 
 function App() {
 
@@ -13,10 +15,6 @@ function App() {
   const [name, setName] = useState<string>("");
   const [picUrl, setPicUrl] = useState<string>("");
   const [albums, setAlbums] = useState<string[]>([]); // album ids, might need to update the naming\
-
-  // tracks context
-
-  const AlbumContext = React.createContext<string[]>([]);
 
   // second argument is the dependencies to trigger useEffect when there is a rerender (like in the set functions)
   // we only need to run the side effect function once
@@ -43,11 +41,10 @@ function App() {
       <Profile name={name} picUrl={picUrl} numAlbums={albums.length} />
       <AlbumContext.Provider value={albums}>
         {albumCards} {/* make this its own component */}
-
-
+        < Graph />
       </AlbumContext.Provider>
     </div>
   );
 }
 
-export default App;
+export { App, AlbumContext };

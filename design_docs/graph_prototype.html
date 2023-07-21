@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+
+    const featureCoordMap = {
+        "acousticness": 0,
+        "danceability": 0.125,
+        "energy": 0.25,
+        "instrumentalness": 0.375,
+        "liveness": 0.5,
+        "loudness": 0.625,
+        "speechiness": 0.75,
+        "valence": 0.875 
+    }
+
+    const tracks = [
+        {
+        "_id": "6UVRuALsY1Q9THdXLouEUe",
+        "name": "Washing Machine",
+        "features": {
+            "acousticness": "0.0296",
+            "danceability": "0.857",
+            "energy": "0.656",
+            "instrumentalness": "0.00000267",
+            "liveness": "0.0321" ,
+            "loudness": "-5.801" ,
+            "speechiness": "0.0464",
+            "valence": "0.875" 
+        }}
+    ]
+
+    function plot(){
+
+        const svg = d3.select("svg");
+        
+        const width = svg.attr("width");
+        const height = svg.attr("height");
+
+        const featureScale = d3.scaleLinear()
+        .domain([0,1])
+        .range([height, 0]);
+
+        // need different scales for different features
+        var axMkr = d3.axisRight(featureScale);
+
+        Object.keys(featureCoordMap).forEach(key => {
+            let xCoord = width * featureCoordMap[key];
+            svg.append("g")
+                .attr("transform", "translate(" + xCoord + ", 0)")
+                .call(axMkr);
+        });
+
+        var highlight = false;
+
+        for (let track of tracks){
+            const trackGroup = svg.append("g");
+            trackGroup.selectAll("circle").data(Object.keys(featureCoordMap)).enter()
+                .append("circle")
+                .attr("r", 5)
+                .attr("cx", d=>width*featureCoordMap[d])
+                .attr("cy", d=>featureScale(track.features[d]));
+
+            var lnMkr = d3.line()
+                .x(d=>width*featureCoordMap[d])
+                .y(d=>featureScale(track.features[d]));
+
+            trackGroup.append("path")
+                .attr("fill", "none")
+                .attr("stroke", "cyan")
+                .attr("d", lnMkr(Object.keys(featureCoordMap))); // pass in the dataset to lnMkr
+
+            trackGroup.on("mouseenter", (d,i,ns) => {
+                // need to highlight everything in the group
+                trackGroup.selectAll("circle").data([]).exit().attr("fill", "red");
+                trackGroup.selectAll("path").data([]).exit().attr("stroke", "red");
+
+            });
+
+            trackGroup.on("mouseout", (d,i, ns) => {
+                trackGroup.selectAll("circle").data([]).exit().attr("fill", "lightgray");
+                trackGroup.selectAll("path").data([]).exit().attr("stroke", "lightgray");
+            });
+
+        }
+
+
+
+    }
+
+    
+
+    </script>
+    <title>Document</title>
+</head>
+
+<body onload="plot()">
+
+    <svg id="graph"
+        width="800" height="500">
+    </svg>
+    
+</body>
+
+</html>
