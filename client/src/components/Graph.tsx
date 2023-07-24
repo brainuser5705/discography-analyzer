@@ -64,7 +64,7 @@ function Graph(){
 
         
 
-    });
+    }, [albums]);
 
     return (
         <svg ref={graphRef} width={graphWidth} height={graphHeight}>

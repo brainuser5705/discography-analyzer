@@ -1,42 +1,22 @@
-import React, { ReactElement, useContext, useEffect, useRef, useState } from 'react';
-import { Track } from '../types/track';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import fetchAlbum from '../data/fetchAlbum';
+
+import { Track } from '../types/track';
 import { Album } from '../types/album';
-import { AlbumContext } from '../App';
 
 type AlbumProps = {
-    id: string
+    album : Album
 }
 
 function AlbumCard(props: AlbumProps) {
 
-    const albums : Album[] = useContext(AlbumContext);
-
     // need to use state instead of initializing a local variable because
     // of the async function in useEffect which will run last
-    const [album, setAlbum] = useState<Album>({
-        _id: "",
-        name: "testing",
-        picUrl: "",
-        tracks: [],
-    });
 
-    useEffect(() => {
-        fetchAlbum(props.id)
-        .then((data: Album) => {
-            setAlbum(data);
-            albums.push(data);
-        })
-        .catch((error) => {
-            console.log("Something went wrong: " + error);
-        });
-    }, []);
-
-    const trackItems = album.tracks.map((track: Track) => {
-        track.album = album;
+    const trackItems = props.album.tracks.map((track: Track) => {
+        track.album = props.album;
         return <li key={track._id}>
-        {track.name} - {track.features.energy} - {track.album.name}</li>;
+            {track.name} - {track.features.energy} - {track.album.name}</li>;
     }
         // note - no brackets because that denotes function that returns void
         
@@ -44,9 +24,9 @@ function AlbumCard(props: AlbumProps) {
 
     return (
         <div className="album-card">
-            <img src={album.picUrl} />
-            <h2>{album.name}</h2>
-            <h3>Number of tracks: {album.tracks.length}</h3>
+            <img src={props.album.picUrl} />
+            <h2>{props.album.name}</h2>
+            <h3>Number of tracks: {props.album.tracks.length}</h3>
             <ul>
                 { trackItems }
             </ul>

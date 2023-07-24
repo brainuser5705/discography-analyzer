@@ -5,22 +5,25 @@ import { Artist } from './types/artist';
 import AlbumCard from './components/AlbumCard';
 import Graph from './components/Graph';
 import { Album } from './types/album';
+import fetchAlbum from './data/fetchAlbum';
 
-const AlbumContext: React.Context<Album[]> =React.createContext<Album[]>([]);
+const AlbumContext = React.createContext<Album[]>([]);
 
 function App() {
+
   // This sets the initial state with useEffect.
   // Using typescript generic to ensure that return value is also a string
   const [_id, setId] = useState<string>("6HvZYsbFfjnjFrWF950C9d");
   const [name, setName] = useState<string>("");
   const [picUrl, setPicUrl] = useState<string>("");
-  const [albumIds, setAlbumIds] = useState<string[]>([]);
 
-  const albums = useRef<Album[]>([]);
+  const [albums, setAlbums] = useState<Album[]>([]); // figure out how to make it run only once
 
   // second argument is the dependencies to trigger useEffect when there is a rerender (like in the set functions)
   // we only need to run the side effect function once
   useEffect(() => {
+
+    let albumArr : Album[] = [];
 
     fetch(`http://localhost:3000/artist/${_id}`)
       .then((response) => response.json(), (error) => console.log("Something went wrong: " + error))
@@ -28,30 +31,35 @@ function App() {
         setId(artistJson._id);
         setName(artistJson.name);
         setPicUrl(artistJson.picUrl);
-        setAlbumIds(artistJson.album_ids);
+    
+        (async function loop() {
+            for (let id of artistJson.album_ids) {
+              let album = await fetchAlbum(id);
+              albumArr.push(album);
+              console.log("Fetched album: " + album.name);
+              setAlbums(albumArr);
+            }
+          
+        })();
+        
       })
       .catch((error) => {
         console.log("Something went wrong fetching artist id " + _id + "; " + error);
       });
 
-  });
 
-  const albumCards = albumIds.map((albumId) =>
-    <AlbumCard id={albumId} />
+  }, []);
+
+  const albumCards = albums.map((album) => 
+      <AlbumCard album={album} />
   );
 
-  const albumList = albums.current.map((album) =>
-    <li>{album.name}</li>
-  )
-  
   return (
     <div>
-      <Profile name={name} picUrl={picUrl} numAlbums={albums.current.length} />
-      <AlbumContext.Provider value={ albums.current }>
-        <ul>{ albumList }</ul>
-        { albumCards }
+      <Profile name={name} picUrl={picUrl} numAlbums={albums.length} />
+      <AlbumContext.Provider value={albums}>
+        { albumCards }{/* make this its own component */}
         < Graph />
-        
       </AlbumContext.Provider>
     </div>
   );
