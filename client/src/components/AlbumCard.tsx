@@ -1,14 +1,17 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import { Track } from '../types/track';
 import PropTypes from 'prop-types';
 import fetchAlbum from '../data/fetchAlbum';
 import { Album } from '../types/album';
+import { AlbumContext } from '../App';
 
 type AlbumProps = {
     id: string
 }
 
 function AlbumCard(props: AlbumProps) {
+
+    const albums : Album[] = useContext(AlbumContext);
 
     // need to use state instead of initializing a local variable because
     // of the async function in useEffect which will run last
@@ -23,10 +26,11 @@ function AlbumCard(props: AlbumProps) {
         fetchAlbum(props.id)
         .then((data: Album) => {
             setAlbum(data);
+            albums.push(data);
         })
         .catch((error) => {
             console.log("Something went wrong: " + error);
-        })
+        });
     }, []);
 
     const trackItems = album.tracks.map((track: Track) => {
