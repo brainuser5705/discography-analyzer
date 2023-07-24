@@ -110,7 +110,7 @@ async function extractData(){
 
         try{
             let albums = await getAlbums(artistId);
-
+            
             let artistDoc = await Artist.exists({"_id": artistId});
             if (!artistDoc){
 
@@ -120,7 +120,7 @@ async function extractData(){
                         "_id": artistId,
                         "name": artistData.name,
                         "picUrl": artistData.images[0].url,
-                        "albums": albums
+                        "album_ids": albums
                     });
                 })
 

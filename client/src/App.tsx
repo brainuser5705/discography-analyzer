@@ -16,8 +16,9 @@ function App() {
   const [_id, setId] = useState<string>("6HvZYsbFfjnjFrWF950C9d");
   const [name, setName] = useState<string>("");
   const [picUrl, setPicUrl] = useState<string>("");
-
   const [albums, setAlbums] = useState<Album[]>([]); // figure out how to make it run only once
+
+  const [finished, setFinished] = useState<boolean>(false);
 
   // second argument is the dependencies to trigger useEffect when there is a rerender (like in the set functions)
   // we only need to run the side effect function once
@@ -33,13 +34,15 @@ function App() {
         setPicUrl(artistJson.picUrl);
     
         (async function loop() {
+          if (!finished){
             for (let id of artistJson.album_ids) {
               let album = await fetchAlbum(id);
               albumArr.push(album);
               console.log("Fetched album: " + album.name);
               setAlbums(albumArr);
             }
-          
+            setFinished(true);
+          }
         })();
         
       })

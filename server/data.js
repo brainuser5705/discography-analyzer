@@ -134,7 +134,7 @@ async function extractAllData(){
                         "_id": artistId,
                         "name": artistData.name,
                         "pic_url": artistData.images[0].url,
-                        "albums": albums
+                        "album_ids": albums
                     });
 
                     console.log("Created artist!");

@@ -5,7 +5,7 @@ const artistSchema = new Schema({
     _id: String,
     name: String,
     picUrl: String,
-    albums: [{
+    album_ids: [{
         type: String,
         ref: 'Album'
     }] // primitive array, array of SchemaTypes
