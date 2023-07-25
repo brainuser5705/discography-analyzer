@@ -11,7 +11,7 @@ function Profile(props: ProfileProps){
 
     return (
         <div className="profile">
-            <img src={props.picUrl} />
+            <img height="100px" src={props.picUrl} />
             <h1>{props.name}</h1>
             <ul>
                 <li>Albums: {props.numAlbums}</li>
