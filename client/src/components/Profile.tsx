@@ -13,9 +13,9 @@ function Profile(props: ProfileProps){
         <div className="profile">
             <img height="100px" src={props.picUrl} />
             <span>{props.name}</span>
-            {/* <ul>
+            <ul>
                 <li>Albums: {props.numAlbums}</li>
-            </ul> */}
+            </ul>
         </div>
     );
 }

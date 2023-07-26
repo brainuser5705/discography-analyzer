@@ -105,7 +105,11 @@ function Graph(props){
                         .attr("stroke", "red")
                         .attr("opacity", "1.0");    
                     d3.select("#selected-track").text(track.name);
-                    console.log(track.album._id);
+                    d3.select("#selected-track-img").attr("src",track.album.picUrl);
+                    d3.select("#selected-track-features")
+                        .selectAll("li").data(features).enter()
+                        .append("li")
+                        .text((d)=>d + " - " + track.features[d]);
                     d3.select("#album_" + track.album._id).style("color", "red");
                 });
 
@@ -126,11 +130,17 @@ function Graph(props){
         });
         
 
-    }, [context.finished]);
+    }, [context.finished, context.albums]);
+
+
 
     return (
         <div>
+            <img id="selected-track-img" height="100px"/>
             <div id="selected-track">{ noTrackSelected }</div>
+            <ul id="selected-track-features">
+                
+            </ul>
             <svg ref={graphRef} width={graphWidth} height={graphHeight}>
 
             </svg>

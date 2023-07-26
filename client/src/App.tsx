@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import './App.css';
 import Profile from './components/Profile';
 import { Artist } from './types/artist';
@@ -7,6 +7,7 @@ import Graph from './components/Graph';
 import { Album } from './types/album';
 import fetchAlbum from './data/fetchAlbum';
 import * as d3 from 'd3';
+import AlbumSelect from './components/AlbumSelect';
 
 const AlbumContext = React.createContext<any>({});
 
@@ -22,11 +23,11 @@ function App() {
   // set to true when data fetching is done for final re-render
   const [finished, setFinished] = useState<boolean>(false);
 
-  const albumListRef = useRef(null);
-
   const [graphWidth, setGraphWidth] = useState(0);
   const [graphHeight, setGraphHeight] = useState(0);
   const graphRef = useRef(null);
+
+  const [albumSelection, setAlbumSelection] = useState<string>("all-albums");
 
   // second argument is the dependencies to trigger useEffect when there is a rerender (like in the set functions)
   // we only need to run the side effect function once
@@ -46,11 +47,14 @@ function App() {
             for (let id of artistJson.album_ids) {
               let album = await fetchAlbum(id);
               albumArr.push(album);
-              console.log("Fetched album: " + album.name);
               setAlbums(albumArr);
+              if (id === albumSelection){ // only one single album
+                break;
+              }
             }
             setFinished(true);
           }
+          console.log(albums);
         })();
 
         setGraphWidth(graphRef.current.offsetWidth);
@@ -62,25 +66,47 @@ function App() {
       });
 
 
-  }, []);
+  }, [albumSelection]);
 
-  const albumCards = albums.map((album) => 
-    <AlbumCard album={album} />
-  );
+  
+  if (finished){ // when rendered
+    const selectionElement = (document.getElementById("albums-selection") as HTMLInputElement);
+    selectionElement.addEventListener("click", () => {
+      setAlbumSelection(selectionElement.value);
+      setFinished(false);
+    });
+  }
+
+  const albumCards = (() => {
+    if (finished){
+      if (albumSelection==="all-albums"){
+        return albums.map((album) => <AlbumCard album={album} />);
+      }else{
+        let album : Album = albums.filter((album)=>album._id===albumSelection)[0];
+        return <AlbumCard album={album} />;
+      }
+    }
+  })();
 
   return (
     <div>
-      <div id="graph-side" ref={graphRef}>
-        <Profile name={name} picUrl={picUrl} numAlbums={albums.length}/>
-        <AlbumContext.Provider value={{albums, finished}}>
-          <div id="graph">
-            < Graph width={graphWidth} height={graphHeight}/>
-          </div>
-        </AlbumContext.Provider>
-      </div>
-      <div id="list-side">
-        { albumCards }
-      </div>
+      <AlbumContext.Provider value={{albums, finished}}>
+        <div id="graph-side" ref={graphRef}>
+          
+            <div id="graph">
+              < Graph width={graphWidth} height={graphHeight}/>
+            </div>
+          // selected song state
+        </div>
+        <div id="list-side">
+          <label htmlFor="ablum-search">Search for artist: </label>
+          <input></input>
+          <Profile name={name} picUrl={picUrl} numAlbums={albums.length}/>
+          <label htmlFor="albums-selection">Select an album: </label>
+          <AlbumSelect />
+          { albumCards }
+        </div>
+      </AlbumContext.Provider>
     </div>
   );
 }

@@ -75,7 +75,7 @@ function AlbumCard(props: AlbumProps) {
                 })
         })
 
-    }, []);
+    }, [props.album]); // needed so the album card can rerender all the d3 stuff after selection
 
     // need to use state instead of initializing a local variable because
     // of the async function in useEffect which will run last
