@@ -14,7 +14,7 @@ function App() {
 
   // This sets the initial state with useEffect.
   // Using typescript generic to ensure that return value is also a string
-  const [_id, setId] = useState<string>("6HvZYsbFfjnjFrWF950C9d");
+  const [_id, setId] = useState<string>("3l0CmX0FuQjFxr8SK7Vqag");
   const [name, setName] = useState<string>("");
   const [picUrl, setPicUrl] = useState<string>("");
   const [albums, setAlbums] = useState<Album[]>([]); // figure out how to make it run only once
@@ -23,6 +23,10 @@ function App() {
   const [finished, setFinished] = useState<boolean>(false);
 
   const albumListRef = useRef(null);
+
+  const [graphWidth, setGraphWidth] = useState(0);
+  const [graphHeight, setGraphHeight] = useState(0);
+  const graphRef = useRef(null);
 
   // second argument is the dependencies to trigger useEffect when there is a rerender (like in the set functions)
   // we only need to run the side effect function once
@@ -48,6 +52,9 @@ function App() {
             setFinished(true);
           }
         })();
+
+        setGraphWidth(graphRef.current.offsetWidth);
+        setGraphHeight(graphRef.current.offsetHeight);
         
       })
       .catch((error) => {
@@ -61,36 +68,19 @@ function App() {
     <AlbumCard album={album} />
   );
 
-  const albumList = d3.select(albumListRef.current);
-  albumList.selectAll("li").remove(); // resets it
-  albums.map((album) => {
-    albumList.append("li")
-      .attr("id", "album_" + album._id)
-      .text(album.name)
-      //@ts-ignore
-      .on("mouseover", (d)=>{
-        d3.select(d.target).style("color", "blue");
-        let group = d3.selectAll(".group_" + album._id) // cannot define outside because of order of rendering
-        group.selectAll("circle").data([]).exit().attr("fill", "blue");
-        group.selectAll("path").data([]).exit().attr("stroke", "blue");
-      })
-      .on("mouseout", (d)=>{
-        d3.select(d.target).style("color", "gray");
-        let group = d3.selectAll(".group_" + album._id)
-        group.selectAll("circle").data([]).exit().attr("fill", "gray");
-        group.selectAll("path").data([]).exit().attr("stroke", "gray");
-      })
-  });
-
   return (
     <div>
-      {/* <Profile name={name} picUrl={picUrl} numAlbums={albums.length} /> */}
-      <AlbumContext.Provider value={{albums, finished}}>
-        <li id="album-name-list" ref={albumListRef}>
-        </li>
-        < Graph />
-        {/* { albumCards } */}
-      </AlbumContext.Provider>
+      <div id="graph-side" ref={graphRef}>
+        <Profile name={name} picUrl={picUrl} numAlbums={albums.length}/>
+        <AlbumContext.Provider value={{albums, finished}}>
+          <div id="graph">
+            < Graph width={graphWidth} height={graphHeight}/>
+          </div>
+        </AlbumContext.Provider>
+      </div>
+      <div id="list-side">
+        { albumCards }
+      </div>
     </div>
   );
 }

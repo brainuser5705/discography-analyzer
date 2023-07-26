@@ -12,10 +12,10 @@ function Profile(props: ProfileProps){
     return (
         <div className="profile">
             <img height="100px" src={props.picUrl} />
-            <h1>{props.name}</h1>
-            <ul>
+            <span>{props.name}</span>
+            {/* <ul>
                 <li>Albums: {props.numAlbums}</li>
-            </ul>
+            </ul> */}
         </div>
     );
 }
