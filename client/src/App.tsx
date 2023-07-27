@@ -36,9 +36,13 @@ function App() {
   // we only need to run the side effect function once
   useEffect(() => {
 
+    setGraphWidth(graphRef.current.offsetWidth);
+    setGraphHeight(graphRef.current.offsetHeight);
+
     let albumArr : Album[] = [];
 
-    fetch(`http://localhost:3000/artist/${_id}`)
+    if (!finished){
+      fetch(`http://localhost:3000/artist/${_id}`)
       .then((response) => response.json(), (error) => console.log("Something went wrong: " + error))
       .then((artistJson: Artist) => {
         setId(artistJson._id);
@@ -52,30 +56,30 @@ function App() {
               albumArr.push(album);
               setAlbums(albumArr);
             }
-            if (!selectedFinished){
-              if (albumSelection==="all-albums" || id === albumSelection){ // only one single album
-                selectedAlbums.push(album);
-                setSelectedAlbums(selectedAlbums);
-                if (id === albumSelection){
-                  break;
-                }
-              }
-            }
           }
-          if (!finished) setFinished(true);
-          if (!selectedFinished) setSelectedFinished(true);
+          setFinished(true);
         })();
-
-        setGraphWidth(graphRef.current.offsetWidth);
-        setGraphHeight(graphRef.current.offsetHeight);
         
       })
       .catch((error) => {
         console.log("Something went wrong fetching artist id " + _id + "; " + error);
       });
+    }
 
-
-  }, [albumSelection]);
+    if (finished && !selectedFinished){ // need to check that all albums are fetched first (finished boolean)
+      for (let album of albums){
+        if (albumSelection==="all-albums" || album._id === albumSelection){ // only one single album
+          selectedAlbums.push(album);
+          setSelectedAlbums(selectedAlbums);
+          if (album._id === albumSelection){
+            break;
+          }
+        }
+      }
+      setSelectedFinished(true);
+    }
+    
+  }, [albumSelection, finished]);
 
   
   if (finished){ // when rendered
@@ -88,7 +92,7 @@ function App() {
   }
 
   const albumCards = (() => {
-    if (finished){
+    if (selectedFinished){
       if (albumSelection==="all-albums"){
         return albums.map((album) => <AlbumCard album={album} />);
       }else{

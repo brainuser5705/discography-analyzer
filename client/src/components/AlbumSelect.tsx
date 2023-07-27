@@ -10,7 +10,7 @@ function AlbumSelect() {
 
     return (
         <select name="albums-selection" id="albums-selection">
-            <option value="all-albums" selected>All albums</option>
+            <option value="all-albums" defaultValue="all-albums">All albums</option>
             <option disabled={true}>----</option>
             { albumOptions }
         </select>
