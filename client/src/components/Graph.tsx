@@ -67,7 +67,7 @@ function Graph(props){
                 
         }
 
-        context.albums.forEach((album : Album) => {
+        context.selectedAlbums.forEach((album : Album) => {
             // choose a color for each album
             for (let track of album.tracks){
 
@@ -105,12 +105,12 @@ function Graph(props){
                         .attr("stroke", "red")
                         .attr("opacity", "1.0");    
                     d3.select("#selected-track").text(track.name);
-                    d3.select("#selected-track-img").attr("src",track.album.picUrl);
+                    d3.select("#selected-track-img").attr("src",album.picUrl);
                     d3.select("#selected-track-features")
                         .selectAll("li").data(features).enter()
                         .append("li")
                         .text((d)=>d + " - " + track.features[d]);
-                    d3.select("#album_" + track.album._id).style("color", "red");
+                    d3.select("#album_" + album._id).style("color", "red");
                 });
 
                 //@ts-ignore
@@ -122,7 +122,7 @@ function Graph(props){
                         .attr("stroke", "gray")
                         .attr("opacity", "0.3");
                     d3.select("#selected-track").text(noTrackSelected);
-                    d3.select("#album_" + track.album._id).style("color", "gray");
+                    d3.select("#album_" + album._id).style("color", "gray");
                 });    
 
             }
@@ -130,7 +130,7 @@ function Graph(props){
         });
         
 
-    }, [context.finished, context.albums]);
+    }, [context.finished, context.selectedFinished]);
 
 
 

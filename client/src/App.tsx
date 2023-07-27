@@ -18,10 +18,13 @@ function App() {
   const [_id, setId] = useState<string>("3l0CmX0FuQjFxr8SK7Vqag");
   const [name, setName] = useState<string>("");
   const [picUrl, setPicUrl] = useState<string>("");
+
   const [albums, setAlbums] = useState<Album[]>([]); // figure out how to make it run only once
+  const [selectedAlbums, setSelectedAlbums] = useState<Album[]>([]);
 
   // set to true when data fetching is done for final re-render
   const [finished, setFinished] = useState<boolean>(false);
+  const [selectedFinished, setSelectedFinished] = useState<boolean>(false);
 
   const [graphWidth, setGraphWidth] = useState(0);
   const [graphHeight, setGraphHeight] = useState(0);
@@ -41,20 +44,26 @@ function App() {
         setId(artistJson._id);
         setName(artistJson.name);
         setPicUrl(artistJson.picUrl);
-    
+
         (async function loop() {
-          if (!finished){
-            for (let id of artistJson.album_ids) {
-              let album = await fetchAlbum(id);
+          for (let id of artistJson.album_ids) {
+            let album = await fetchAlbum(id);
+            if (!finished){
               albumArr.push(album);
               setAlbums(albumArr);
-              if (id === albumSelection){ // only one single album
-                break;
+            }
+            if (!selectedFinished){
+              if (albumSelection==="all-albums" || id === albumSelection){ // only one single album
+                selectedAlbums.push(album);
+                setSelectedAlbums(selectedAlbums);
+                if (id === albumSelection){
+                  break;
+                }
               }
             }
-            setFinished(true);
           }
-          console.log(albums);
+          if (!finished) setFinished(true);
+          if (!selectedFinished) setSelectedFinished(true);
         })();
 
         setGraphWidth(graphRef.current.offsetWidth);
@@ -73,7 +82,8 @@ function App() {
     const selectionElement = (document.getElementById("albums-selection") as HTMLInputElement);
     selectionElement.addEventListener("click", () => {
       setAlbumSelection(selectionElement.value);
-      setFinished(false);
+      setSelectedAlbums([]);
+      setSelectedFinished(false);
     });
   }
 
@@ -90,7 +100,7 @@ function App() {
 
   return (
     <div>
-      <AlbumContext.Provider value={{albums, finished}}>
+      <AlbumContext.Provider value={{albums, selectedAlbums, finished, selectedFinished}}>
         <div id="graph-side" ref={graphRef}>
           
             <div id="graph">
