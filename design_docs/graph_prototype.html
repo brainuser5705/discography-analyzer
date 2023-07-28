@@ -78,7 +78,6 @@
                 // need to highlight everything in the group
                 trackGroup.selectAll("circle").data([]).exit().attr("fill", "red");
                 trackGroup.selectAll("path").data([]).exit().attr("stroke", "red");
-
             });
 
             trackGroup.on("mouseout", (d,i, ns) => {

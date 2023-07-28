@@ -6,8 +6,8 @@ import AlbumCard from './components/AlbumCard';
 import Graph from './components/Graph';
 import { Album } from './types/album';
 import fetchAlbum from './data/fetchAlbum';
-import * as d3 from 'd3';
 import AlbumSelect from './components/AlbumSelect';
+import SearchArtist from './components/SearchArtist';
 
 const AlbumContext = React.createContext<any>({});
 
@@ -36,6 +36,8 @@ function App() {
   // we only need to run the side effect function once
   useEffect(() => {
 
+    console.log(_id);
+
     setGraphWidth(graphRef.current.offsetWidth);
     setGraphHeight(graphRef.current.offsetHeight);
 
@@ -58,6 +60,7 @@ function App() {
             }
           }
           setFinished(true);
+          console.log("finished true");
         })();
         
       })
@@ -65,6 +68,7 @@ function App() {
         console.log("Something went wrong fetching artist id " + _id + "; " + error);
       });
     }
+    console.log("Albums: " + albums)
 
     if (finished && !selectedFinished){ // need to check that all albums are fetched first (finished boolean)
       for (let album of albums){
@@ -77,9 +81,13 @@ function App() {
         }
       }
       setSelectedFinished(true);
+      console.log("selected true");
     }
     
+    console.log(selectedAlbums);
+
   }, [albumSelection, finished]);
+  
 
   
   if (finished){ // when rendered
@@ -104,17 +112,15 @@ function App() {
 
   return (
     <div>
-      <AlbumContext.Provider value={{albums, selectedAlbums, finished, selectedFinished}}>
+      <AlbumContext.Provider value={{albums, selectedAlbums, finished, selectedFinished, _id, setId, setFinished, setSelectedFinished, setSelectedAlbums}}>
         <div id="graph-side" ref={graphRef}>
-          
             <div id="graph">
               < Graph width={graphWidth} height={graphHeight}/>
             </div>
           // selected song state
         </div>
         <div id="list-side">
-          <label htmlFor="ablum-search">Search for artist: </label>
-          <input></input>
+          <SearchArtist/>
           <Profile name={name} picUrl={picUrl} numAlbums={albums.length}/>
           <label htmlFor="albums-selection">Select an album: </label>
           <AlbumSelect />

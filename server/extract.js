@@ -9,6 +9,7 @@ const Album = require('./schemas/Album');
 BLACKPINK_ID = '41MozSoPIsD1dJM0CLPjZF';
 VANISHING_GIRL_ID = '0z5Sp5kPFConDlXjb0V9vJ'
 NEW_JEANS_ID = '6HvZYsbFfjnjFrWF950C9d';
+CLAIRO_ID = '3l0CmX0FuQjFxr8SK7Vqag';
 
 async function extractData(){
 
@@ -136,8 +137,11 @@ async function extractData(){
 
     // await Artist.deleteOne({"_id" : '0z5Sp5kPFConDlXjb0V9vJ'});
     // await Album.deleteOne({"_id" : '0edYR0ydMBFJFt2OHwDrmt'});
+    await getArtist[BLACKPINK_ID];
     await getArtist(VANISHING_GIRL_ID);
     await getArtist(NEW_JEANS_ID);
+    await getArtist(CLAIRO_ID);
+    // need to be able to update the artist album lists
 
 }
 
