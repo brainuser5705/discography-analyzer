@@ -8,6 +8,7 @@ import { Album } from './types/album';
 import fetchAlbum from './data/fetchAlbum';
 import AlbumSelect from './components/AlbumSelect';
 import SearchArtist from './components/SearchArtist';
+import SubmitArtist from './components/SubmitArtist';
 
 const AlbumContext = React.createContext<any>({});
 
@@ -36,15 +37,13 @@ function App() {
   // we only need to run the side effect function once
   useEffect(() => {
 
-    console.log(_id);
-
     setGraphWidth(graphRef.current.offsetWidth);
     setGraphHeight(graphRef.current.offsetHeight);
 
     let albumArr : Album[] = [];
 
     if (!finished){
-      fetch(`http://localhost:3000/artist/${_id}`)
+      fetch(`http://localhost:5000/artist/${_id}`)
       .then((response) => response.json(), (error) => console.log("Something went wrong: " + error))
       .then((artistJson: Artist) => {
         setId(artistJson._id);
@@ -60,7 +59,6 @@ function App() {
             }
           }
           setFinished(true);
-          console.log("finished true");
         })();
         
       })
@@ -68,7 +66,6 @@ function App() {
         console.log("Something went wrong fetching artist id " + _id + "; " + error);
       });
     }
-    console.log("Albums: " + albums)
 
     if (finished && !selectedFinished){ // need to check that all albums are fetched first (finished boolean)
       for (let album of albums){
@@ -81,11 +78,8 @@ function App() {
         }
       }
       setSelectedFinished(true);
-      console.log("selected true");
     }
     
-    console.log(selectedAlbums);
-
   }, [albumSelection, finished]);
   
 
@@ -111,7 +105,7 @@ function App() {
   })();
 
   return (
-    <div>
+    <div id="submit-artist">
       <AlbumContext.Provider value={{albums, selectedAlbums, finished, selectedFinished, _id, setId, setFinished, setSelectedFinished, setSelectedAlbums}}>
         <div id="graph-side" ref={graphRef}>
             <div id="graph">
@@ -120,6 +114,7 @@ function App() {
           // selected song state
         </div>
         <div id="list-side">
+          <SubmitArtist />
           <SearchArtist/>
           <Profile name={name} picUrl={picUrl} numAlbums={albums.length}/>
           <label htmlFor="albums-selection">Select an album: </label>

@@ -5,10 +5,6 @@ function SearchArtist() {
 
     const context = useContext(AlbumContext);
 
-    if (context.finished){
-        
-    }
-
     return (
         <div id="search-artist">
             <label htmlFor="artist-search">Search for artist: </label>
