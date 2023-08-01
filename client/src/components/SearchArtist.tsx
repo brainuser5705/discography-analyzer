@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { AlbumContext } from '../App';
 
 function SearchArtist() {
@@ -13,7 +13,6 @@ function SearchArtist() {
                 value={context.id}
                 onChange={(e)=>{
                     context.setId(e.target.value);
-                    
                 }}
                 id="artist-search"
                 name="artist-search"
@@ -25,8 +24,9 @@ function SearchArtist() {
                 type="submit"
                 value="Search"
                 onClick={()=>{
+                    // reset all states since the new artist will have new data
                     context.setFinished(false);
-                    context.setSelectedAlbums([]);
+                    context.setSelectedAlbum([]);
                     context.setSelectedFinished(false);
                 }}
             />      

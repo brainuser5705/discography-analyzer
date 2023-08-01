@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Track } from '../types/track';
@@ -75,24 +75,24 @@ function AlbumCard(props: AlbumProps) {
                 })
         })
 
-    }, [props.album]); // needed so the album card can rerender all the d3 stuff after selection
-
-    // need to use state instead of initializing a local variable because
-    // of the async function in useEffect which will run last
+    }, []); // no dependencies to re-render for
 
     const trackItems = props.album.tracks.map((track: Track) => {
+
+        // needed to refer when highlighting other tracks in the same album
         track.album = props.album;
+        
         return <li key={track._id} id={"albumCard-track-"+track._id}>
             {track.name}
-            {track.features?"":<span className="no-track-features">No track feature analysis</span>}</li>;
-    }
-        // note - no brackets because that denotes function that returns void
-        
-    );
+            {track.features ? "" :
+                <span className="no-track-features">
+                    No track feature analysis</span>}
+            </li>;
+    });
 
     return (
         <div className="album-card">
-            <img height="100px"src={props.album.picUrl} />
+            <img alt="" src={props.album.picUrl} />
             <h2 id={"albumcard-"+props.album._id}>{props.album.name}</h2>
             <h3>Number of tracks: {props.album.tracks.length}</h3>
             <ul>

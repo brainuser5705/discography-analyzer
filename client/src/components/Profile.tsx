@@ -1,4 +1,3 @@
-
 import PropTypes from 'prop-types';
 
 type ProfileProps = {
@@ -11,10 +10,10 @@ function Profile(props: ProfileProps){
 
     return (
         <div className="profile">
-            <img height="100px" src={props.picUrl} />
+            <img alt="" src={props.picUrl} />
             <span>{props.name}</span>
             <ul>
-                <li>Albums: {props.numAlbums}</li>
+                <li># of Albums: {props.numAlbums}</li>
             </ul>
         </div>
     );

@@ -1,45 +1,41 @@
 import { useState } from "react";
 
-function SubmitArtist(){
+import addArtist from "../data/addArtist";
 
-    const [newArtist, setNewArtist] = useState("");
+function SubmitArtist() {
+
+    const [newArtistId, setNewArtistId] = useState("");
 
     return (
         <div>
             <input
-                value={newArtist}
-                onChange={(e)=>setNewArtist(e.target.value)}
+                value={newArtistId}
+                onChange={(e) => setNewArtistId(e.target.value)}
                 placeholder="Submit a new artist id"
             />
 
             <input
                 type="submit"
                 value="Submit"
-                onClick={()=>{
-                    fetch("http://localhost:5000/artist/add", {
-                        "method": "POST",
-                        "headers": {
-                            "Content-Type": "application/json"
-                        },
-                        "body": JSON.stringify(
-                            {"artistId": newArtist}
-                        )
-                    }).then((response) => {
-                        let msgElement = document.getElementById("submit-artist-message");
-                        console.log(response);
-                        if (!response.ok){
-                            response.json().then((json) =>{
-                                msgElement.innerHTML = json.error; 
+                onClick={() => {
+                    addArtist(newArtistId).then((response) => {
+                        // send back a status message
+                        let msgElement =
+                            document.getElementById("submit-artist-message");
+                        if (!response.ok) {
+                            response.json().then((json) => {
+                                msgElement.innerHTML = json.error;
                             });
-                        }else{
-                            msgElement.innerHTML = `Successfully added artist ${newArtist} to database`;
+                        } else {
+                            msgElement.innerHTML =
+                                `Successfully added artist
+                                 ${newArtistId} to database`;
                         }
                     });
                 }}
             />
 
-            <div id="submit-artist-message">
-            </div>
+            <div id="submit-artist-message"></div>
 
         </div>
     );
