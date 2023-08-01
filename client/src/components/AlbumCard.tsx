@@ -83,7 +83,8 @@ function AlbumCard(props: AlbumProps) {
     const trackItems = props.album.tracks.map((track: Track) => {
         track.album = props.album;
         return <li key={track._id} id={"albumCard-track-"+track._id}>
-            {track.name} - {track.features.energy} - {track.album.name}</li>;
+            {track.name}
+            {track.features?"":<span className="no-track-features">No track feature analysis</span>}</li>;
     }
         // note - no brackets because that denotes function that returns void
         
