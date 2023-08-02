@@ -147,8 +147,10 @@ function App() {
 
         {/* Displays the list of album cards and interactivity control */}
         <div id="list-side">
-          <SubmitArtist />
-          <SearchArtist />
+          <div id="artist-inputs">
+            {/* <SubmitArtist /> */}
+            <SearchArtist />
+          </div>
           <Profile name={name} picUrl={picUrl} numAlbums={albums.length} />
           <AlbumSelect />
           {albumCards}

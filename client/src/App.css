@@ -1,23 +1,88 @@
-html, body{
+/**** Layout ****/
+
+html,
+body {
   width: 100%;
   height: 100%;
 }
 
-#graph-side{
+#graph-side {
   position: fixed;
   width: 70vw;
   height: 700px;
 }
 
-#list-side{
+#list-side {
   position: absolute;
   top: 0px;
   left: 70vw;
   width: 30vw;
+  margin-left: 1em;
 }
 
-/* #list-side{
-  
-} */
+/**** Components ****/
+
+.item-display {
+  width: 100%;
+  height: max-content;
+}
+
+.item-display .content {
+  display: inline-block;
+  /* rather than float, img gets included in the div */
+  vertical-align: top;
+  padding: 1em;
+}
+
+.item-display .name {
+  font-size: 3em;
+}
+
+/* Profile */
+
+#profile img {
+  margin: 1em 0;
+  height: 15em;
+}
 
 
+/* Selected track */
+
+#selected-track {
+  padding: 1em;
+}
+
+#selected-track-div {
+  width: 80%;
+  /* manually overriding for selected track */
+}
+
+#selected-track-img {
+  height: 10em;
+}
+
+#selected-track-features {
+  width: 70%;
+  column-count: 3;
+}
+
+/* Artist inputs */
+
+#artist-inputs {
+  margin: 1em 0;
+}
+
+/* Album cards */
+
+.album-card {
+  margin: 1em;
+}
+
+.album-card-name{
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.album-card img {
+  height: 10em;
+}

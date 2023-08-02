@@ -110,13 +110,18 @@ function Graph(props) {
                             trackGroup.selectAll("path").data([]).exit()
                                 .attr("stroke", "red")
                                 .attr("opacity", "1.0");
-                            d3.select("#selected-track").text(track.name);
+                            d3.select("#selected-track-name").text(track.name);
                             d3.select("#selected-track-img")
                                 .attr("src", album.picUrl);
+
+                            // change the selected track information
                             d3.select("#selected-track-features")
-                                .selectAll("li").data(features).enter()
-                                .append("li")
+                                .selectAll("div").remove();
+                            d3.select("#selected-track-features")
+                                .selectAll("div").data(features).enter()
+                                .append("div")
                                 .text((d) => d + " - " + track.features[d]);
+
                             d3.select("#album_" + album._id)
                                 .style("color", "red");
                         });
@@ -129,10 +134,14 @@ function Graph(props) {
                             trackGroup.selectAll("path").data([]).exit()
                                 .attr("stroke", "gray")
                                 .attr("opacity", "0.3");
-                            d3.select("#selected-track")
+                            // d3.select("#selected-track-img")
+                            //     .attr("src", "");    
+                            d3.select("#selected-track-name")
                                 .text(noTrackSelectedString);
                             d3.select("#album_" + album._id)
                                 .style("color", "gray");
+                            // d3.select("#selected-track-features")
+                            //     .selectAll("div").remove();
                         });
                     }
                 }
@@ -146,9 +155,15 @@ function Graph(props) {
 
     return (
         <div>
-            <img alt="" id="selected-track-img"/>
-            <div id="selected-track">{noTrackSelectedString}</div>
-            <ul id="selected-track-features"></ul>
+            <div className="item-display" id="selected-track">
+                <img alt="" id="selected-track-img"/>
+                <div className="content" id="selected-track-div">
+                    <div className="name" id="selected-track-name">
+                        {noTrackSelectedString}</div>
+                    <div id="selected-track-features"></div>
+                </div>
+            </div>
+            
             <svg ref={graphRef} width={graphWidth} height={graphHeight}></svg>
         </div>
     );

@@ -91,13 +91,16 @@ function AlbumCard(props: AlbumProps) {
     });
 
     return (
-        <div className="album-card">
+        <div className="item-display album-card">
             <img alt="" src={props.album.picUrl} />
-            <h2 id={"albumcard-"+props.album._id}>{props.album.name}</h2>
-            <h3>Number of tracks: {props.album.tracks.length}</h3>
-            <ul>
-                { trackItems }
-            </ul>
+            <div className="content">
+                <div className="album-card-name" id={"albumcard-"+props.album._id}>{props.album.name}</div>
+                <div>Number of tracks: {props.album.tracks.length}</div>
+                <ul>
+                    { trackItems }
+                </ul>
+            </div>
+            
         </div>
     );
 

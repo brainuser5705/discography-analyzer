@@ -9,12 +9,12 @@ type ProfileProps = {
 function Profile(props: ProfileProps){
 
     return (
-        <div className="profile">
+        <div className="item-display" id="profile">
             <img alt="" src={props.picUrl} />
-            <span>{props.name}</span>
-            <ul>
-                <li># of Albums: {props.numAlbums}</li>
-            </ul>
+            <div className="content">
+                <div className="name">{props.name}</div>
+                <div># of Albums: {props.numAlbums}</div>
+            </div>
         </div>
     );
 }
