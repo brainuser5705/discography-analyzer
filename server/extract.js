@@ -107,7 +107,7 @@ async function extractData(artistId){
 
     async function getArtist(artistId){
         // need to be a promise because we need to do something with the data when it's called
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve) => {
   
             let album_ids = await getAlbums(artistId);
             
@@ -122,7 +122,6 @@ async function extractData(artistId){
                         "picUrl": artistData.images[0].url,
                         "album_ids": album_ids
                     });
-                    console.log("Returning true");
                     resolve(1);
                 })
                 .catch(async (error) => {
@@ -131,8 +130,8 @@ async function extractData(artistId){
                 });
     
             }else{
-                console.log(`Artist ${artistId} already has document. Updating artist.`);
-                await Artist.updateOne({"_id": artistId}, {"$push": {"album_ids": album_ids}});
+                console.log(`Artist ${artistId} already has document.`);
+                // await Artist.updateOne({"_id": artistId}, {"$push": {"album_ids": album_ids}});
                 resolve(2);
             }
 
@@ -158,7 +157,6 @@ async function fetchArtist(artistId) {
         mongoose.connect(process.env.MONGODB_URI)
         .then(async () => {
             var result = await extractData(artistId);
-            console.log("result: " + result);
             resolve(result);
         })
         .catch(() => {

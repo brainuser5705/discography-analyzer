@@ -31,7 +31,7 @@ body {
   display: inline-block;
   /* rather than float, img gets included in the div */
   vertical-align: top;
-  padding: 1em;
+  padding: 0em 1em;
 }
 
 .item-display .name {

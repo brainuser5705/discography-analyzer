@@ -7,16 +7,12 @@ async function postArtist(req, res) {
     const { artistId } = req.body;
 
     var newArtist = await extract.fetchArtist(artistId);
-    console.log("newArtist: " + newArtist);
     switch (newArtist){
-        case 1:
-            console.log("Successfully added artist " + artistId);
-            return res.status(200).json(newArtist);
-        case 2:
-            console.log()
-            return res.status(409).json({ error: `Artist id ${artistId} already in database, updating instead.` })
-        case -1:
-            console.log("No such artist")
+        case 1: // created
+            return res.status(201).json(newArtist);
+        case 2: // accepted
+            return res.status(202).json({ msg: `Artist id ${artistId} already in database, updating instead.` })
+        case -1: // invalid
             return res.status(406).json({ error: `No such artist with id ${artistId}` });
     }
 
